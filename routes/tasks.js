@@ -17,13 +17,29 @@ const authMiddleware = (req, res, next) => {
 };
 
 router.get("/", authMiddleware, async (req, res) => {
-  const tasks = req.user.role === "admin" ? await Task.findAll({ include: User }) : await Task.findAll({ where: { UserId: req.user.id } });
+  const { status } = req.query;
+  const where = req.user.role === "admin" ? {} : { UserId: req.user.id };
+  if (status) where.status = status;
+
+  const tasks = await Task.findAll({ where, include: User });
   res.json(tasks);
 });
 
 router.post("/", authMiddleware, async (req, res) => {
   const { description } = req.body;
   const task = await Task.create({ description, UserId: req.user.id });
+  res.json(task);
+});
+
+router.patch("/:id/status", authMiddleware, async (req, res) => {
+  const task = await Task.findByPk(req.params.id);
+  if (!task) return res.status(404).json({ message: "Tarea no encontrada" });
+
+  const statuses = ["Asignado", "En Progreso", "Hecho"];
+  const currentIndex = statuses.indexOf(task.status);
+  task.status = statuses[(currentIndex + 1) % statuses.length];
+  await task.save();
+
   res.json(task);
 });
 
