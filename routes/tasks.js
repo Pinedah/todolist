@@ -21,7 +21,10 @@ router.get("/", authMiddleware, async (req, res) => {
   const where = req.user.role === "admin" ? {} : { UserId: req.user.id };
   if (status) where.status = status;
 
-  const tasks = await Task.findAll({ where, include: User });
+  const tasks = await Task.findAll({
+    where,
+    include: { model: User, attributes: ["username"] }, // Include username in the response
+  });
   res.json(tasks);
 });
 

@@ -29,6 +29,7 @@
             <tr>
                 <th>Tarea</th>
                 <th>Estado</th>
+                <th>Usuario</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -44,7 +45,12 @@
             }
 
             const user = parseJwt(token);
-            document.getElementById("loggedUser").textContent = `Usuario: ${user.username || "Desconocido"}`; // Ensure username is accessed correctly
+            document.getElementById("loggedUser").textContent = `Usuario: ${user.username || "Desconocido"}`;
+
+            // Hide "Usuario" column for non-admin users
+            if (user.role !== "admin") {
+                document.querySelector("th:nth-child(3)").style.display = "none";
+            }
 
             await loadTasks();
 
@@ -96,11 +102,18 @@
                 const table = document.getElementById("taskTable");
                 table.innerHTML = "";
 
+                const user = parseJwt(token);
+
                 tasks.forEach(task => {
                     const row = document.createElement("tr");
                     row.innerHTML = `
                         <td>${task.description}</td>
                         <td>${task.status}</td>
+                        ${
+                            user.role === "admin"
+                                ? `<td>${task.User ? task.User.username : "N/A"}</td>` // Show username only for admin
+                                : ""
+                        }
                         <td>
                             <button onclick="changeStatus(${task.id})">Cambiar Estado</button>
                         </td>

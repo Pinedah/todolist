@@ -8,10 +8,31 @@ const router = express.Router();
 
 router.post("/register", async (req, res) => {
     const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, password: hashedPassword });
-    res.json({ message: "Usuario registrado" });
+
+    try {
+        const existingUser = await User.findOne({ where: { username } });
+        if (existingUser) {
+            return res.status(400).json({ message: "El nombre de usuario ya existe" }); // User-friendly error
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({ username, password: hashedPassword });
+        res.json({ message: "Usuario registrado" });
+    } catch (error) {
+        console.error("Error al registrar usuario:", error);
+        res.status(500).json({ message: "Error en el servidor" });
+    }
 });
+
+// Add default admin user
+(async () => {
+    const adminExists = await User.findOne({ where: { username: "admin" } });
+    if (!adminExists) {
+        const hashedPassword = await bcrypt.hash("admin", 10);
+        await User.create({ username: "admin", password: hashedPassword, role: "admin" });
+        console.log("Usuario admin creado con éxito");
+    }
+})();
 
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
@@ -32,7 +53,6 @@ router.post("/signup", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-
         const newUser = await User.create({ email, password });
         
         // Generar token JWT
