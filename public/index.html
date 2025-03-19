@@ -6,23 +6,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Lista de Tareas</h2>
     <div class="header">
-        <span id="loggedUser"></span>
-        <button onclick="logout()">Cerrar Sesión</button>
+        <h2 class="flex-items">
+            Lista de Tareas, ¡Hola  
+            <span id="loggedUser"></span>!
+        </h2>
+        <div class="flex-items">
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div>
     </div>
-    <form id="taskForm">
-        <input type="text" id="taskDescription" placeholder="Descripción de la tarea" required>
-        <button type="submit">Agregar Tarea</button>
-    </form>
-    <div class="filter">
-        <label for="filterStatus">Filtrar por estado:</label>
-        <select id="filterStatus">
-            <option value="">Todos</option>
-            <option value="Asignado">Asignado</option>
-            <option value="En Progreso">En Progreso</option>
-            <option value="Hecho">Hecho</option>
-        </select>
+    <div class="flex-section2">
+        <form class="flex-items-s2" id="taskForm">
+            <input type="text" id="taskDescription" placeholder="Descripción de la tarea" required>
+            <button type="submit">Agregar Tarea</button>
+        </form>
+        <div class="flex-items-s2 filter">
+            <label for="filterStatus">Filtrar por estado:</label>
+            <select id="filterStatus">
+                <option value="">Todos</option>
+                <option value="Asignado">Asignado</option>
+                <option value="En Progreso">En Progreso</option>
+                <option value="Hecho">Hecho</option>
+            </select>
+        </div>
     </div>
     <table>
         <thead>
@@ -45,7 +51,7 @@
             }
 
             const user = parseJwt(token);
-            document.getElementById("loggedUser").textContent = `Usuario: ${user.username || "Desconocido"}`;
+            document.getElementById("loggedUser").textContent = `${user.username || "Desconocido"}`;
 
             // Hide "Usuario" column for non-admin users
             if (user.role !== "admin") {

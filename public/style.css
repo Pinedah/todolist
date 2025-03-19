@@ -5,13 +5,13 @@ body {
     margin: 0;
     padding: 0;
     display: flex; /* Enable flexbox for centering */
-    justify-content: flex-start; /* Align content from the top */
-    align-items: center; /* Center horizontally */
-    height: 100vh; /* Full viewport height */
-    text-align: center;
     flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center;
     overflow: auto; /* Allow scrolling if content overflows */
     padding-top: 20px; /* Add spacing from the top */
+    min-height: 100vh; /* Ensure full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 h2 {
@@ -20,16 +20,17 @@ h2 {
 }
 
 form {
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 20px;
-    width: 300px;
+    width: 100%; /* Adjust to fit flex container */
+    max-width: 400px; /* Limit maximum width */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input, button {
+input, button, select {
     width: calc(100% - 20px);
     margin: 10px 0;
     padding: 10px;
@@ -38,7 +39,7 @@ input, button {
     font-size: 14px;
 }
 
-input:focus, button:focus {
+input:focus, button:focus, select:focus {
     outline: none;
     border-color: #888;
 }
@@ -48,6 +49,8 @@ button {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 5px;
 }
 
 button:hover {
@@ -55,15 +58,7 @@ button:hover {
 }
 
 select {
-    width: calc(100% - 20px);
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #fff;
-    color: #333;
-    appearance: none; /* Remove default styles */
+    appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -71,14 +66,10 @@ select {
     cursor: pointer;
 }
 
-select:focus {
-    outline: none;
-    border-color: #888;
-}
-
 table {
     margin: 20px auto;
-    width: 80%;
+    width: 100%; /* Ensure table fits within the viewport */
+    max-width: 80%; /* Limit table width */
     border-collapse: collapse;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -108,4 +99,41 @@ a {
 
 a:hover {
     color: #555;
+}
+
+/* Añadido para la sección del header */
+.header {
+    display: flex;
+    justify-content: space-between; /* Space between elements */
+    align-items: center; /* Align items vertically */
+    width: 80%; /* Align with the central column */
+    max-width: 1200px; /* Limit maximum width */
+    margin: 0 auto; /* Center the header */
+    padding: 10px 0; /* Adjust padding */
+    border-bottom: 2px solid #ccc;
+    background-color: #f4f4f4;
+}
+
+.header h2 {
+    margin: 0;
+    color: #444;
+}
+
+#loggedUser {
+    font-weight: bold;
+}
+
+.flex-section2 {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: space-between;
+    gap: 20px; /* Add spacing between items */
+    width: 80%;
+    margin: 20px auto;
+}
+
+.flex-items-s2 {
+    flex: 1; /* Allow items to grow equally */
+    min-width: 300px; /* Ensure a minimum width */
+    text-align: center;
 }
