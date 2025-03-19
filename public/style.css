@@ -4,7 +4,14 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    display: flex; /* Enable flexbox for centering */
+    justify-content: flex-start; /* Align content from the top */
+    align-items: center; /* Center horizontally */
+    height: 100vh; /* Full viewport height */
     text-align: center;
+    flex-direction: column; /* Stack elements vertically */
+    overflow: auto; /* Allow scrolling if content overflows */
+    padding-top: 20px; /* Add spacing from the top */
 }
 
 h2 {
@@ -45,6 +52,28 @@ button {
 
 button:hover {
     background-color: #555;
+}
+
+select {
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    appearance: none; /* Remove default styles */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #888;
 }
 
 table {
